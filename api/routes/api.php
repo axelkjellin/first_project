@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\User;
 use Illuminate\Support\Facades\Validator;
+
+use App\Student;
 
 
 /*
@@ -16,40 +17,27 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-Route::post('/register', function (Request $request) {
-        $data = $request->all();
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-        $user->token = $user->createToken($user->email)->accessToken;
-        
-        return $user;
-});
+Route::post('/register', 'UserController@register');
 
 Route::post('/login', function (Request $request) {
     $data = $request->all();
 
-    $validacao = Validator::make($data, [
+    $validator = Validator::make($data, [
         'email' => 'required',
         'password' => 'required'
     ]);
 
-    if($validacao->fails()){
-        return $validacao->errors();
+    if($validator->fails()){
+        return $validator->errors();
     }
 
     if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
         $user = auth()->user();
         $user->token = $user->createToken($user->email)->accessToken;
         return $user;
-    } else {
-        return 'deu erro';
     }
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+Route::resource('/student', 'StudentController')->middleware('auth:api');
+Route::resource('/classes', 'StudentsClassController')->middleware('auth:api');
