@@ -1,10 +1,10 @@
 <template>
 <div id="form">
     <b-container class="fluid">
-        <h1  style="text-align:right;margin-top:50px;">
+        <h1  style="text-align:right;margin-top:30;">
             Olá {{currentUser.name}}
         </h1> 
-        <h6 style="text-align:right;margin-bottom:50px;">
+        <h6 style="text-align:right;margin-bottom:30px;">
             <b-button size="sm" @click="logout()">logout</b-button>
         </h6>
         <b-row>
@@ -14,6 +14,10 @@
             <b-col >
                 <Class :currentUser="currentUser" @clicked="onClickChild"/>
                 <Classes :currentUser="currentUser" :reloadClass="onClickChild"/>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col >
                 <Students :currentUser="currentUser"/>
             </b-col>
         </b-row>

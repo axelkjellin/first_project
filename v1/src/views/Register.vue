@@ -43,7 +43,7 @@ export default {
         .post("http://localhost:8000/api/register", this.user)
         .then(resp => {
           if (resp.status == 201) {
-            return redirect("login");
+            return redirect('');
           }
         });
     }

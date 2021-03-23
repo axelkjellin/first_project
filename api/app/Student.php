@@ -14,4 +14,8 @@ class Student extends Model
         'gender',
         'students_classes_id'
     ];
+
+    public function classe() {
+        return $this->hasOne(StudentsClass::class, 'id', 'students_classes_id');
+    }
 }

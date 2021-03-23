@@ -12,5 +12,8 @@ class StudentsClass extends Model
         'name'
     ];
 
+    public function teste(){
+        return $this->belongsTo('App\Student');
+    }
     
 }

@@ -40,4 +40,6 @@ Route::post('/login', function (Request $request) {
 
 
 Route::resource('/student', 'StudentController')->middleware('auth:api');
+Route::delete('/student/{id}', 'StudentsClassController@delete')->middleware('auth:api');
 Route::resource('/classes', 'StudentsClassController')->middleware('auth:api');
+Route::delete('/classes/{id}', 'StudentsClassController@delete')->middleware('auth:api');

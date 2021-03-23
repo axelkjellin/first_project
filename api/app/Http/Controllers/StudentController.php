@@ -14,18 +14,13 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::get();
-        return $students;
-    }
+        $students = Student::all();
+        $classes = $students->map(function($student) {
+            return $student->classe;
+        });
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $students->classes = $classes;
+        return $students;
     }
 
     /**
@@ -47,28 +42,6 @@ class StudentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Student $student)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Student $student)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -77,7 +50,12 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+
+        $data = $request->all();
+        logger($data);
+        $student = Student::where('id', $data['id'])->first();
+        $student->update(['name' => $data['name'], 'students_classes_id' => $data['student_class_id']]);
+        return $student;
     }
 
     /**
@@ -88,6 +66,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+
+        return $student;
     }
 }

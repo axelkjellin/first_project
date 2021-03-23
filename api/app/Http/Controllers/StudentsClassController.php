@@ -15,18 +15,7 @@ class StudentsClassController extends Controller
     public function index()
     {
         $classes = StudentsClass::get();
-        logger($classes);
         return $classes;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
     }
 
     /**
@@ -45,28 +34,6 @@ class StudentsClassController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\StudentsClass  $studentsClass
-     * @return \Illuminate\Http\Response
-     */
-    public function show(StudentsClass $studentsClass)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\StudentsClass  $studentsClass
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(StudentsClass $studentsClass)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -75,7 +42,11 @@ class StudentsClassController extends Controller
      */
     public function update(Request $request, StudentsClass $studentsClass)
     {
-        //
+        $data = $request->all();
+        $studentsClass = StudentsClass::where('id', $data['id'])->first();
+        $studentsClass->update(['name' => $data['name']]);
+
+        return $studentsClass;
     }
 
     /**
@@ -84,8 +55,11 @@ class StudentsClassController extends Controller
      * @param  \App\StudentsClass  $studentsClass
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StudentsClass $studentsClass)
+    public function destroy($id)
     {
-        //
+        $studentsClass = StudentsClass::where('id', $id)->first();
+        $studentsClass->delete();
+
+        return $studentsClass;
     }
 }

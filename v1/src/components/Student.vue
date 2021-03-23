@@ -27,7 +27,7 @@
                     id="birthdate"
                     label="Data de Nascimento"
                     >
-                    <b-calendar id="birthdate" v-model="student.birthdate" locale="pt-br"></b-calendar>
+                    <b-input type="date" id="birthdate" v-model="student.birthdate" locale="pt-br"></b-input>
                 </b-form-group>
                 <b-form-group>
                     <b-button variant="primary" @click="saveStudent()" >Salvar</b-button>
@@ -68,7 +68,12 @@ export default {
           "http://localhost:8000/api/student",
           this.student,
           this.currentUser.authorization
-        )
+        ).then(() => {
+          this.student.name = ''
+          this.student.birthdate = ''
+          this.student.gender = ''
+          this.student.student_class_id = ''
+        })
     },
     getClasses() {
       this.$http
